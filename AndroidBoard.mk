@@ -1,8 +1,5 @@
 LOCAL_PATH := $(call mydir)
 
-# include the nonopensource counterpart to this file
-include vendor/motorola/xt1034/AndroidBoardVendor.mk
-
 #
 # Compile Linux Kernel
 #

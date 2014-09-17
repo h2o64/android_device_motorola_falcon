@@ -62,9 +62,6 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 5930614784
 
 -include device/qcom/msm8226/BoardConfig.mk
 
-# inherit from the proprietary version
--include vendor/motorola/xt1034/BoardConfigVendor.mk
-
 LOCAL_PATH := device/motorola/falcon
 
 TARGET_SPECIFIC_HEADER_PATH += $(LOCAL_PATH)/include

@@ -206,12 +206,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory
 
-# Wifi
-PRODUCT_PACKAGES += \
-    hostapd.accept \
-    hostapd.deny \
-    hostapd_default.conf
-
 PRODUCT_PACKAGES += \
     p2p_supplicant_overlay.conf \
     wpa_supplicant_overlay.conf
@@ -229,5 +223,3 @@ PRODUCT_COPY_FILES += \
     kernel/drivers/staging/prima/firmware_bin/WCNSS_cfg.dat:system/etc/firmware/wlan/prima/WCNSS_cfg.dat \
     kernel/drivers/staging/prima/firmware_bin/WCNSS_qcom_cfg.ini:system/etc/firmware/wlan/prima/WCNSS_qcom_cfg.ini
 
-
-$(call inherit-product, vendor/motorola/xt1034/xt1034-vendor.mk)
