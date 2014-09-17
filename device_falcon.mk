@@ -58,10 +58,7 @@ PRODUCT_PACKAGES += \
 
 # Audio configuration
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/audio_effects.conf:system/vendor/etc/audio_effects.conf \
     $(LOCAL_PATH)/configs/audio_platform_info.xml:system/etc/audio_platform_info.xml \
-    $(LOCAL_PATH)/configs/audio_policy.conf:system/etc/audio_policy.conf \
-    $(LOCAL_PATH)/configs/mixer_paths.xml:system/etc/mixer_paths.xml
 
 # Camera
 PRODUCT_PACKAGES += \
@@ -166,35 +163,15 @@ PRODUCT_PACKAGES += \
 
 # Ramdisk
 PRODUCT_PACKAGES += \
-    init.crda.sh \
-    init.qcom.bt.sh \
-    init.qcom.coex.sh \
-    init.qcom.efs.sync.sh \
-    init.qcom.fm.sh \
-    init.qcom.mdm_links.sh \
-    init.qcom.modem_links.sh \
-    init.qcom.post_boot.sh \
-    init.qcom.thermal_conf.sh \
-    init.qcom.wifi.sh \
     moto_com.sh \
     mount_pds.sh
 
 PRODUCT_PACKAGES += \
     bbx \
     gpecheck.sh \
-    init.class_main.sh \
     init.mmi.boot.sh \
     init.mmi.rc \
     init.mmi.touch.sh \
-    init.qcom.class_core.sh \
-    init.qcom.early_boot.sh \
-    init.qcom.rc \
-    init.qcom.sh \
-    init.qcom.ssr.sh \
-    init.qcom.syspart_fixup.sh \
-    init.qcom.usb.rc \
-    init.qcom.usb.sh \
-    init.recovery.qcom.rc \
     init.target.rc \
     ueventd.qcom.rc
 
