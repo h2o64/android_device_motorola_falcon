@@ -160,20 +160,21 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     qrngd \
     qrngp
-
 # Ramdisk
 PRODUCT_PACKAGES += \
-    moto_com.sh \
-    mount_pds.sh
-
-PRODUCT_PACKAGES += \
-    bbx \
-    gpecheck.sh \
-    init.mmi.boot.sh \
-    init.mmi.rc \
-    init.mmi.touch.sh \
-    init.target.rc \
-    ueventd.qcom.rc
+bbx \
+fstab.qcom \
+gpecheck.sh \
+gpe-fstab.qcom \
+init.mmi.boot.sh \
+init.mmi.rc \
+init.mmi.touch.sh \
+init.qcom.rc \
+init.recovery.qcom.rc \
+init.target.rc \
+ueventd.qcom.rc \
+moto_com.sh \
+mount_pds.sh
 
 # Thermal
 PRODUCT_PACKAGES += \
@@ -199,4 +200,3 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     kernel/drivers/staging/prima/firmware_bin/WCNSS_cfg.dat:system/etc/firmware/wlan/prima/WCNSS_cfg.dat \
     kernel/drivers/staging/prima/firmware_bin/WCNSS_qcom_cfg.ini:system/etc/firmware/wlan/prima/WCNSS_qcom_cfg.ini
-
