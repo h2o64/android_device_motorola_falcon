@@ -67,8 +67,8 @@ void init_msm_properties(unsigned long msm_id, unsigned long msm_ver, char *boar
         /* xt1032 GPE */
         property_set("ro.product.device", "falcon_gpe");
         property_set("ro.product.model", "Moto G");
-        property_set("ro.build.description", "falcon_gpe-user 4.4.4 KTU84P.M003 18 release-keys");
-        property_set("ro.build.fingerprint", "motorola/falcon_gpe/falcon_umts:4.4.4/KTU84P.M003/18:user/release-keys");
+        property_set("ro.build.description", "falcon_gpe-user 5.0.1 LRX21Z.M002 15 release-keys");
+        property_set("ro.build.fingerprint", "motorola/falcon_gpe/falcon_umts:5.0.1/LRX21Z.M002/15:user/release-keys");
         property_set("ro.mot.build.customerid", "retusa_glb");
         property_set("ro.telephony.default_network", "0");
         property_set("persist.radio.multisim.config", "");
