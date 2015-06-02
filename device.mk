@@ -54,9 +54,6 @@ PRODUCT_COPY_FILES += \
 # System Properties
 -include $(LOCAL_PATH)/system_prop.mk
 
-PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-    persist.sys.usb.config=mtp
-
 # Screen density
 PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := xhdpi
