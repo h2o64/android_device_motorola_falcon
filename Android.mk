@@ -21,7 +21,7 @@
 
 LOCAL_PATH := $(call my-dir)
 
-ifneq ($(filter falcon peregrine thea titan,$(TARGET_DEVICE)),)
+ifeq ($(TARGET_DEVICE),falcon)
 include $(call all-makefiles-under,$(LOCAL_PATH))
 
 include $(CLEAR_VARS)
