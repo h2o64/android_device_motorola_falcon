@@ -81,6 +81,9 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/mixer_paths.xml:system/etc/mixer_paths.xml \
     $(LOCAL_PATH)/configs/audio_policy.conf:system/etc/audio_policy.conf
 
+# BSP
+TARGET_USES_QCOM_BSP := true
+
 # Camera
 PRODUCT_PACKAGES += \
     libxml2
