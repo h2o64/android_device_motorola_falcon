@@ -42,6 +42,7 @@ TARGET_GLOBAL_CPPFLAGS += -mfpu=neon-vfpv4 -mfloat-abi=hardfp -mtune=cortex-a7
 # Assert
 TARGET_OTA_ASSERT_DEVICE := xt1031,xt1032,xt1033,xt1034,falcon_umts,falcon_umtsds,falcon_cdma,falcon_retuaws,falcon,falcon_gpe
 TARGET_BOARD_INFO_FILE := device/motorola/falcon/board-info.txt
+WITH_LZMA_OTA := true
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := MSM8226
