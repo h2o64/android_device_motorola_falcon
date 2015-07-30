@@ -472,6 +472,10 @@ on boot
     chown system system /sys/devices/virtual/graphics/fb0/hbm
     chmod 0660 /sys/devices/virtual/graphics/fb0/hbm
 
+    # Dynamic FPS
+    chown system system /sys/devices/virtual/graphics/fb0/dynamic_fps 
+    chmod 0664 /sys/devices/virtual/graphics/fb0/dynamic_fps
+
     # setup trace dir
     mkdir /cache/trace 0777 root shell
     chown root shell /cache/trace
