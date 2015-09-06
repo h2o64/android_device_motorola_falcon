@@ -35,6 +35,7 @@ TARGET_CPU_MEMCPY_BASE_OPT_DISABLE := true
 TARGET_CPU_VARIANT := krait
 ARCH_ARM_HAVE_TLS_REGISTER := true
 TARGET_USE_KINGFISHER_OPTIMIZATION := true
+QCOM_HARDWARE_VARIANT := msm8226
 
 TARGET_GLOBAL_CFLAGS += -mfpu=neon-vfpv4 -mfloat-abi=hardfp -mtune=cortex-a7
 TARGET_GLOBAL_CPPFLAGS += -mfpu=neon-vfpv4 -mfloat-abi=hardfp -mtune=cortex-a7
