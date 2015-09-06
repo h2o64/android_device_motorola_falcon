@@ -728,7 +728,7 @@ on charger
     write /sys/devices/system/cpu/cpu1/online 0
     write /sys/devices/system/cpu/cpu2/online 0
     write /sys/devices/system/cpu/cpu3/online 0
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "interactive"
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "smartmax"
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 96000
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1190400
     chown system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
@@ -754,7 +754,7 @@ on property:init.svc.bootanim=running
     setprop sys.perf.profile 2
 
 on property:sys.boot_completed=1
-    write /sys/class/devfreq/qcom,cpubw.63/governor msm_cpufreq
+    write /sys/class/devfreq/qcom,cpubw.63/governor "msm_cpufreq"
     write /sys/block/mmcblk0/queue/scheduler zen
     write /sys/module/lpm_levels/enable_low_power/l2 4
     write /sys/module/msm_pm/modes/cpu0/power_collapse/suspend_enabled 1
@@ -778,18 +778,15 @@ on property:sys.boot_completed=1
     write /sys/module/msm_pm/modes/cpu2/retention/idle_enabled 1
     write /sys/module/msm_pm/modes/cpu3/retention/idle_enabled 1
 
+
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 96000
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq 96000
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq 96000
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq 96000
-
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1190400
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq 1190400
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq 1190400
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq 1190400
-
-    write /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load 90
-
     chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
     chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
     chown root system /sys/devices/system/cpu/cpu1/online
@@ -804,6 +801,19 @@ on property:sys.boot_completed=1
     write /sys/module/cpu_boost/parameters/input_boost_freq 1094400
     write /sys/module/cpu_boost/parameters/input_boost_ms 40
 
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "smartmax"
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor "smartmax"
+    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "smartmax"
+    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor "smartmax"
+    write /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay 20000
+    write /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load 75
+    write /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 1094400
+    write /sys/devices/system/cpu/cpufreq/interactive/io_is_busy 1
+    write /sys/devices/system/cpu/cpufreq/interactive/target_loads 90
+    write /sys/devices/system/cpu/cpufreq/interactive/min_sample_time 40000
+    write /sys/devices/system/cpu/cpufreq/interactive/sampling_down_factor 100000
+    start mpdecision
+
     # Set up KSM
     write /sys/kernel/mm/ksm/deferred_timer 1
     write /sys/kernel/mm/ksm/pages_to_scan 100
@@ -816,16 +826,15 @@ on property:sys.boot_completed=1
 # Powersave
 on property:sys.perf.profile=0
     stop mpdecision
+    write /sys/class/devfreq/qcom,cpubw.63/governor "powersave"
     write /sys/devices/system/cpu/cpu1/online 1
     write /sys/devices/system/cpu/cpu2/online 1
     write /sys/devices/system/cpu/cpu3/online 1
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor powersave
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor powersave
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor powersave
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor powersave
-    write /sys/class/devfreq/fdb00000.qcom,kgsl-3d0/governor powersave
-    write /sys/class/devfreq/qcom,cpubw.63/governor powersave
-
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "conservative"
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor "conservative"
+    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "conservative"
+    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor "conservative"
+    write /sys/class/devfreq/fdb00000.qcom,kgsl-3d0/governor "powersave"
     exec /system/bin/rm /data/system/default_values
     start mpdecision
 
@@ -835,24 +844,12 @@ on property:sys.perf.profile=1
     write /sys/devices/system/cpu/cpu1/online 1
     write /sys/devices/system/cpu/cpu2/online 1
     write /sys/devices/system/cpu/cpu3/online 1
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor interactive
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor interactive
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor interactive
-
-    write /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay 20000
-    write /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load 90
-    write /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 1094400
-    write /sys/devices/system/cpu/cpufreq/interactive/io_is_busy 1
-    write /sys/devices/system/cpu/cpufreq/interactive/target_loads 85
-    write /sys/devices/system/cpu/cpufreq/interactive/min_sample_time 40000
-    write /sys/devices/system/cpu/cpufreq/interactive/timer_rate 30000
-    write /sys/devices/system/cpu/cpufreq/interactive/max_freq_hysteresis 100000
-    write /sys/devices/system/cpu/cpufreq/interactive/timer_slack 30000
-
-    write /sys/class/devfreq/fdb00000.qcom,kgsl-3d0/governor msm-adreno-tz
     write /sys/class/devfreq/qcom,cpubw.63/governor msm_cpufreq
-
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "smartmax"
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor "smartmax"
+    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "smartmax"
+    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor "smartmax"
+    write /sys/class/devfreq/fdb00000.qcom,kgsl-3d0/governor "msm-adreno-tz"
     exec /system/bin/rm /data/system/default_values
     start mpdecision
 
@@ -862,9 +859,9 @@ on property:sys.perf.profile=2
     write /sys/devices/system/cpu/cpu1/online 1
     write /sys/devices/system/cpu/cpu2/online 1
     write /sys/devices/system/cpu/cpu3/online 1
-    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor performance
-    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor performance
-    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor performance
-    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor performance
-    write /sys/class/devfreq/fdb00000.qcom,kgsl-3d0/governor performance
-    write /sys/class/devfreq/qcom,cpubw.63/governor performance
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor "performance"
+    write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor "performance"
+    write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor "performance"
+    write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor "performance"
+    write /sys/class/devfreq/fdb00000.qcom,kgsl-3d0/governor "performance"
+    write /sys/class/devfreq/qcom,cpubw.63/governor "performance"
