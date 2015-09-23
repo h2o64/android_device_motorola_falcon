@@ -6,7 +6,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     audio.offload.multiple.enabled=false
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    av.offload.enable=false \
+    audio.offload.video=false \
     av.streaming.offload.enable=false
 
 PRODUCT_PROPERTY_OVERRIDES += \
