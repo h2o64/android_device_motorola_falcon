@@ -170,6 +170,10 @@ PRODUCT_PACKAGES += \
     init.recovery.qcom.rc \
     ueventd.qcom.rc
 
+# Stlport
+PRODUCT_PACKAGES += \
+    libstlport
+
 # USB
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory
