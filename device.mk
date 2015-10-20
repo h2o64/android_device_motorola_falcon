@@ -113,6 +113,15 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     gps.msm8226
 
+PRODUCT_COPY_FILES += \
+    device/motorola/falcon/gps/etc/gps.conf:system/etc/gps.conf \
+    device/motorola/falcon/gps/etc/flp.conf:system/etc/flp.conf \
+    device/motorola/falcon/gps/etc/izat.conf:system/etc/izat.conf \
+    device/motorola/falcon/gps/etc/sap.conf:system/etc/sap.conf \
+    device/motorola/falcon/gps/etc/quipc.conf:system/etc/quipc.conf \
+    device/motorola/falcon/gps/etc/xtra_root_cert.pem:system/etc/xtra_root_cert.pem \
+    device/motorola/falcon/gps/etc/xtwifi.conf:system/etc/xtwifi.conf
+
 # Keystore
 PRODUCT_PACKAGES += \
     keystore.msm8226
