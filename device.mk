@@ -87,6 +87,17 @@ TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
 PRODUCT_PACKAGES += \
     libxml2
 
+# Dalvik
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.heapstartsize=8m \
+    dalvik.vm.heapgrowthlimit=96m \
+    dalvik.vm.heapsize=256m \
+    dalvik.vm.heaptargetutilization=0.75 \
+    dalvik.vm.heapminfree=2m \
+    dalvik.vm.heapmaxfree=8m \
+    dalvik.vm.image-dex2oat-filter=everything \
+    dalvik.vm.dex2oat-filter=everything
+
 # Display
 PRODUCT_PACKAGES += \
     copybit.msm8226 \
