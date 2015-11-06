@@ -96,6 +96,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     rild.libpath=/system/vendor/lib/libril-qc-qmi-1.so
 
 PRODUCT_PROPERTY_OVERRIDES += \
+    ro.telephony.ril.config=simactivation
+
+PRODUCT_PROPERTY_OVERRIDES += \
     ro.use_data_netmgrd=true
 
 # USB
