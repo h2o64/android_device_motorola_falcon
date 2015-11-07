@@ -32,11 +32,16 @@
 #define HISPEED_FREQ "998400"
 #define HISPEED_FREQ_LPM "787200"
 
-#define GO_HISPEED_LOAD "50"
+#define GO_HISPEED_LOAD "75"
 #define GO_HISPEED_LOAD_LPM "90"
+
+#define ABOVE_HIGHSPEED_DELAY 20000
 
 #define TARGET_LOADS "80 998400:90 1190400:99"
 #define TARGET_LOADS_LPM "95 1190400:99"
+
+#define KGSL-3d0 "/sys/class/devfreq/fdb00000.qcom,kgsl-3d0/"
+#define CPUBW "/sys/class/devfreq/qcom,cpubw.63/"
 
 enum {
     PROFILE_POWER_SAVE = 0,
@@ -74,6 +79,14 @@ static int sysfs_write(char *path, char *s)
     return ret;
 }
 
+static int set_governor(char *governor)
+{
+        sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/" "scaling_governor", governor);
+        sysfs_write("/sys/devices/system/cpu/cpu1/cpufreq/" "scaling_governor", governor);
+        sysfs_write("/sys/devices/system/cpu/cpu2/cpufreq/" "scaling_governor", governor);
+        sysfs_write("/sys/devices/system/cpu/cpu3/cpufreq/" "scaling_governor", governor);
+}
+
 static void power_init(__attribute__((unused)) struct power_module *module)
 {
     ALOGI("%s", __func__);
@@ -97,10 +110,12 @@ static void power_set_interactive(__attribute__((unused)) struct power_module *m
 
     if (on) {
         sysfs_write(INTERACTIVE_PATH "hispeed_freq", HISPEED_FREQ);
+        sysfs_write(INTERACTIVE_PATH "above_hispeed_delay", ABOVE_HIGHSPEED_DELAY);
         sysfs_write(INTERACTIVE_PATH "go_hispeed_load", GO_HISPEED_LOAD);
         sysfs_write(INTERACTIVE_PATH "target_loads", TARGET_LOADS);
     } else {
         sysfs_write(INTERACTIVE_PATH "hispeed_freq", HISPEED_FREQ_LPM);
+        sysfs_write(INTERACTIVE_PATH "above_hispeed_delay", ABOVE_HIGHSPEED_DELAY);
         sysfs_write(INTERACTIVE_PATH "go_hispeed_load", GO_HISPEED_LOAD_LPM);
         sysfs_write(INTERACTIVE_PATH "target_loads", TARGET_LOADS_LPM);
     }
@@ -113,8 +128,10 @@ static void set_power_profile(int profile)
 
     switch (profile) {
     case PROFILE_BALANCED:
+        set_governor("smartmax");
         sysfs_write(INTERACTIVE_PATH "boost", "0");
         sysfs_write(INTERACTIVE_PATH "boostpulse_duration", "60000");
+        sysfs_write(INTERACTIVE_PATH "above_hispeed_delay", ABOVE_HIGHSPEED_DELAY);
         sysfs_write(INTERACTIVE_PATH "go_hispeed_load", GO_HISPEED_LOAD);
         sysfs_write(INTERACTIVE_PATH "hispeed_freq", HISPEED_FREQ);
         sysfs_write(INTERACTIVE_PATH "io_is_busy", "1");
@@ -122,11 +139,15 @@ static void set_power_profile(int profile)
         sysfs_write(INTERACTIVE_PATH "sampling_down_factor", "100000");
         sysfs_write(INTERACTIVE_PATH "target_loads", TARGET_LOADS);
         sysfs_write(CPUFREQ_PATH "scaling_max_freq", SCALING_MAX_FREQ);
+        sysfs_write(KGSL-3d0 "governor", msm-adreno-tz);
+        sysfs_write(CPUBW "governor", msm_cpufreq);
         ALOGD("%s: set balanced mode", __func__);
         break;
     case PROFILE_HIGH_PERFORMANCE:
+        set_governor("performance");
         sysfs_write(INTERACTIVE_PATH "boost", "1");
         sysfs_write(INTERACTIVE_PATH "boostpulse_duration", "60000");
+        sysfs_write(INTERACTIVE_PATH "above_hispeed_delay", ABOVE_HIGHSPEED_DELAY);
         sysfs_write(INTERACTIVE_PATH "go_hispeed_load", GO_HISPEED_LOAD);
         sysfs_write(INTERACTIVE_PATH "hispeed_freq", HISPEED_FREQ);
         sysfs_write(INTERACTIVE_PATH "io_is_busy", "1");
@@ -134,11 +155,15 @@ static void set_power_profile(int profile)
         sysfs_write(INTERACTIVE_PATH "sampling_down_factor", "100000");
         sysfs_write(INTERACTIVE_PATH "target_loads", "80");
         sysfs_write(CPUFREQ_PATH "scaling_max_freq", SCALING_MAX_FREQ);
+        sysfs_write(KGSL-3d0 "governor", performance);
+        sysfs_write(CPUBW "governor", performance);
         ALOGD("%s: set performance mode", __func__);
         break;
     case PROFILE_POWER_SAVE:
+        set_governor(conservative);
         sysfs_write(INTERACTIVE_PATH "boost", "0");
         sysfs_write(INTERACTIVE_PATH "boostpulse_duration", "0");
+        sysfs_write(INTERACTIVE_PATH "above_hispeed_delay", ABOVE_HIGHSPEED_DELAY);
         sysfs_write(INTERACTIVE_PATH "go_hispeed_load", GO_HISPEED_LOAD_LPM);
         sysfs_write(INTERACTIVE_PATH "hispeed_freq", HISPEED_FREQ_LPM);
         sysfs_write(INTERACTIVE_PATH "io_is_busy", "0");
@@ -146,6 +171,8 @@ static void set_power_profile(int profile)
         sysfs_write(INTERACTIVE_PATH "sampling_down_factor", "100000");
         sysfs_write(INTERACTIVE_PATH "target_loads", TARGET_LOADS_LPM);
         sysfs_write(CPUFREQ_PATH "scaling_max_freq", SCALING_MAX_FREQ_LPM);
+        sysfs_write(KGSL-3d0 "governor", powersave);
+        sysfs_write(CPUBW "governor", powersave);
         ALOGD("%s: set powersave", __func__);
         break;
     default:
