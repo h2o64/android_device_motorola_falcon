@@ -40,7 +40,7 @@ TARGET_PREBUILT_KERNEL := device/motorola/falcon/kernel
 BOARD_CUSTOM_BOOTIMG_MK := device/motorola/falcon/mkbootimg.mk
 BOARD_KERNEL_CMDLINE := androidboot.bootdevice=msm_sdcc.1 androidboot.hardware=qcom vmalloc=400M androidboot.selinux=permissive
 BOARD_KERNEL_PAGESIZE := 2048
-BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01000000
+BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01000000 --dt device/motorola/falcon/dt.img
 
 # Init
 TARGET_INCREASES_COLDBOOT_TIMEOUT := true
