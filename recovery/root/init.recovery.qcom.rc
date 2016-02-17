@@ -1,4 +1,7 @@
 on init
+    # gpe check
+    chmod 755 /gpecheck
+    exec gpecheck
     mkdir /firmware
     mkdir /vendor
     mkdir /vendor/firmware
