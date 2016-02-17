@@ -1,0 +1,13 @@
+#!/sbin/sh
+
+BDEV=`/sbin/busybox readlink /dev/block/platform/msm_sdcc.1/by-name/userdata`
+FSTYPE=`/sbin/busybox blkid $BDEV | /sbin/busybox cut -d ' ' -f3 | /sbin/busybox cut -d '"' -f2`
+
+if [ "$FSTYPE" == "ext4" ]
+then
+  sed -i '/data/s/f2fs/ext4/g' /etc/recovery.fstab;
+  sed -i '/data/s/flags=fsflags="inline_xattr";length=-16384//g' /etc/recovery.fstab;
+else
+  echo '# GPE CHECKED' >> /etc/recovery.fstab;
+  echo '' >> /etc/recovery.fstab;
+fi
