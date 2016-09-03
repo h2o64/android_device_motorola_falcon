@@ -1,0 +1,21 @@
+#!/sbin/sh
+
+function change_fs() {
+
+BDEV=`/sbin/busybox readlink /dev/block/platform/msm_sdcc.1/by-name/$1`
+FSTYPE=`/sbin/busybox blkid $BDEV | /sbin/busybox cut -d ' ' -f3 | /sbin/busybox cut -d '"' -f2`
+
+  if [ "$FSTYPE" == "ext4" ] then
+    sed -i '/'$1'/s/f2fs/ext4/g' /etc/recovery.fstab;
+    sed -i '/'$1'/s/f2fs/ext4/g' /etc/twrp.fstab;
+  fi
+
+}
+
+# Change to f2fs for system and cache
+# as userdata is already handled by 
+# gpe-detect
+
+change_fs system
+change_fs cache
+

@@ -13,6 +13,12 @@ on init
     wait /dev/block/platform/msm_sdcc.1/by-name/userdata
     exec /sbin/detect-gpe
 
+    # Change system or cache to f2fs
+    wait /dev/block/platform/msm_sdcc.1/by-name/system
+    wait /dev/block/platform/msm_sdcc.1/by-name/cache
+    chmod 755 /f2fs-changer
+    exec /f2fs-changer
+
 on boot
     write /sys/module/lpm_levels/enable_low_power/l2 3
     write /sys/module/msm_pm/modes/cpu0/power_collapse/suspend_enabled 1
